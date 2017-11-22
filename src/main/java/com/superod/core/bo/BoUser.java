@@ -14,31 +14,46 @@ public class BoUser {
 	@Autowired
 	IUserRepository userRepository;
 	
-	public void createUser(String username, String password)
+	public User createUser(User user)
 	{
-		userRepository.insert(new User(username, password));
+		return userRepository.insert(user);
 	}
 	
-	public void updateUser(String username, String password)
+	public User createUser(String username, String password)
+	{
+		return createUser(new User(username, password));
+	}
+	
+	public User updateUser(User user)
+	{
+		return userRepository.save(user);	
+	}
+	
+	public User updateUser(String username, String password)
 	{
 		User user = userRepository.findOneByUsername(username);
-		user.setUsername(username);
+		//user.setUsername(username);
 		user.setPassword(password);
-		userRepository.save(user);
+		return updateUser(user);
+	}
+	
+	public void deleteUser(User user)
+	{
+		userRepository.delete(user);
 	}
 	
 	public void deleteUserByUsername(String username)
 	{
 		User user = userRepository.findOneByUsername(username);
 		System.out.println("delete user with name: " + username);
-		userRepository.delete(user);
+		deleteUser(user);
 	}
 	
 	public void deleteUserById(String id)
 	{
 		User user = userRepository.findOneById(id);
 		System.out.println("delete user with ID: " + id);
-		userRepository.delete(user);
+		deleteUser(user);
 	}
 	
 	public User queryUserByUsername(String username)
