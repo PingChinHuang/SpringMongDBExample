@@ -11,9 +11,13 @@ import com.superod.core.model.User;
 @Repository
 public interface IUserRepository extends MongoRepository<User, String> {
 
-	@Query("{'username': ?0, 'password': ?1}")
-	public List<User> findAllbyUsername(String username, String password);
+	@Query("{'username': ?0}")
+	public List<User> findAllByUsername(String username, String password);
 	
 	@Query("{'username': ?0}")
-	public User findAllbyUsername2(String username);
+	public User findOneByUsername(String username);
+	
+	@Query("{'_id': ?0}")
+	public User findOneById(String id);
+	
 }
